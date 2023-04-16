@@ -5,6 +5,7 @@ import com.g4net.tmdbapp.model.MovieList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -29,8 +30,13 @@ public class MovieService {
     @Value("${tmdb.movie.id.url}")
     private String tmdbMovieIdUrl;
 
+    private final RestTemplate restTemplate;
+
     @Autowired
-    private RestTemplate restTemplate;
+    public MovieService(RestTemplate restTemplate) {
+        Assert.notNull(restTemplate, "RestTemplate must not be null!");
+        this.restTemplate = restTemplate;
+    }
 
     public URI getURI(String patternUrl, String [] exp) {
         UriComponents uriComponents =
@@ -53,7 +59,7 @@ public class MovieService {
         return restTemplate.getForObject(uri, Movie.class);
     }
 
-    public List<Movie> fetchMoviesBySearchQuery(String query) {
+    public List<Movie> fetchMoviesByQuery(String query) {
 
         URI uri = getURI(tmdbSearchMovieUrl, new String [] {tmdbBaseUrl, tmdbApiKey, query});
         MovieList movieResults = restTemplate.getForObject(uri, MovieList.class);
