@@ -2,10 +2,12 @@ package com.g4net.tmdbapp.service;
 
 import com.g4net.tmdbapp.model.Movie;
 import com.g4net.tmdbapp.model.MovieList;
+import com.g4net.tmdbapp.model.MovieNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -53,10 +55,17 @@ public class MovieService {
         return movieList.getResults();
     }
 
-    public Movie fetchMovieById(Long id) {
+    public Movie fetchMovieById(Long id){
 
         URI uri = getURI(tmdbMovieIdUrl, new String [] {tmdbBaseUrl, id.toString(), tmdbApiKey});
-        return restTemplate.getForObject(uri, Movie.class);
+        try
+        {
+            return restTemplate.getForObject(uri, Movie.class);
+        }
+        catch(HttpClientErrorException e)
+        {
+            return null;
+        }
     }
 
     public List<Movie> fetchMoviesByQuery(String query) {
