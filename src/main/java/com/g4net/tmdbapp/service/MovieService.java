@@ -2,7 +2,6 @@ package com.g4net.tmdbapp.service;
 
 import com.g4net.tmdbapp.model.Movie;
 import com.g4net.tmdbapp.model.MovieList;
-import com.g4net.tmdbapp.model.MovieNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

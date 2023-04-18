@@ -1,7 +1,6 @@
 package com.g4net.tmdbapp.controller;
 
 import com.g4net.tmdbapp.model.Movie;
-import com.g4net.tmdbapp.model.MovieNotFoundException;
 import com.g4net.tmdbapp.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
