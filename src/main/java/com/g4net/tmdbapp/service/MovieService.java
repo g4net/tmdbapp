@@ -12,6 +12,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -51,6 +52,7 @@ public class MovieService {
     public List<Movie> fetchMovieList() {
         URI uri = getURI(topRatedMovieUrl, new String[] {tmdbBaseUrl, tmdbApiKey});
         MovieList movieList = restTemplate.getForObject(uri, MovieList.class);
+        if(movieList == null) return Collections.emptyList();
         return movieList.getResults();
     }
 
@@ -71,6 +73,7 @@ public class MovieService {
 
         URI uri = getURI(tmdbSearchMovieUrl, new String [] {tmdbBaseUrl, tmdbApiKey, query});
         MovieList movieResults = restTemplate.getForObject(uri, MovieList.class);
+        if(movieResults == null) return Collections.emptyList();
         return movieResults.getResults();
     }
 }
