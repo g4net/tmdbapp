@@ -45,6 +45,10 @@ public class TmdbappApplicationTests {
         for (Movie movie : movies) {
             Assertions.assertTrue(isTitleContained(query, movie.getTitle()));
         }
+
+        query = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non.";
+        movies = movieService.fetchMoviesByQuery(query);
+        Assertions.assertTrue(movies.isEmpty());
     }
 
     public static boolean isTitleContained(String title, String otherTitle) {
